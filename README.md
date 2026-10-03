@@ -51,3 +51,12 @@ npm run dev      # → http://localhost:3000
 npm run build    # production build (verified ✓)
 npm start        # serve the production build
 ```
+
+## GitHub Pages Deployment
+
+The automated deployment workflow is configured in `.github/workflows/deploy.yml`.
+
+To fix the `404 - Ensure GitHub Pages has been enabled` error during deployment:
+1. Go to your repository on GitHub: `https://github.com/sahil030804/aurelia-landing/settings/pages`
+2. Under **Build and deployment** -> **Source**, select **GitHub Actions** (instead of *Deploy from a branch*).
+3. Re-run the GitHub Actions workflow or push a new commit to `main`.
