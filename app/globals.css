@@ -1,0 +1,314 @@
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:wght@300;400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   AURÉLIA — Design System
+   Luxury editorial · obsidian & champagne
+   ============================================================ */
+
+:root {
+  --font-display: "Bodoni Moda", Georgia, "Times New Roman", serif;
+  --font-body: "Jost", system-ui, -apple-system, sans-serif;
+  --obsidian: #08080a;
+  --charcoal: #101013;
+  --graphite: #17171b;
+  --ivory: #f4efe7;
+  --sand: #8e8878;
+  --champagne: #c9a96a;
+  --champagne-light: #e6d2a4;
+
+  /* Easing — from animations.dev / Emil Kowalski */
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-in-out-quart: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: var(--obsidian);
+  color: var(--ivory);
+  font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Hide default cursor on precise-pointer devices (custom cursor takes over) */
+@media (hover: hover) and (pointer: fine) {
+  body.custom-cursor,
+  body.custom-cursor * {
+    cursor: none !important;
+  }
+}
+
+::selection {
+  background: var(--champagne);
+  color: var(--obsidian);
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--obsidian);
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a30;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9c7f45;
+}
+
+/* ============================================================
+   Utility layers
+   ============================================================ */
+@layer components {
+  .container-edge {
+    width: 100%;
+    max-width: 1600px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .container-edge {
+      padding-inline: 3rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .container-edge {
+      padding-inline: 5rem;
+    }
+  }
+
+  .eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--sand);
+    font-weight: 500;
+  }
+  @media (min-width: 768px) {
+    .eyebrow {
+      letter-spacing: 0.42em;
+    }
+  }
+
+  .display {
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    overflow-wrap: anywhere;
+  }
+
+  .text-gradient-champagne {
+    background: linear-gradient(
+      100deg,
+      #e6d2a4 0%,
+      #c9a96a 38%,
+      #f4efe7 52%,
+      #9c7f45 70%,
+      #c9a96a 100%
+    );
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .hairline {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(201, 169, 106, 0.45),
+      transparent
+    );
+  }
+
+  .glass-panel {
+    background: rgba(16, 16, 19, 0.55);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(244, 239, 231, 0.08);
+  }
+}
+
+/* ============================================================
+   Atmosphere — film grain + vignette
+   ============================================================ */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 100% at 50% 40%,
+    transparent 45%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* ============================================================
+   Custom cursor
+   ============================================================ */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  pointer-events: none;
+  border-radius: 999px;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--champagne-light);
+  mix-blend-mode: difference;
+}
+
+.cursor-ring {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(201, 169, 106, 0.6);
+  transition: width 0.35s var(--ease-out-expo),
+    height 0.35s var(--ease-out-expo), background-color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.cursor-ring.is-hover {
+  width: 76px;
+  height: 76px;
+  background: rgba(201, 169, 106, 0.12);
+  border-color: rgba(230, 210, 164, 0.9);
+}
+
+/* ============================================================
+   Reveal helpers
+   ============================================================ */
+.reveal-mask {
+  overflow: hidden;
+  display: block;
+}
+
+.line-clip {
+  display: block;
+  transform: translateY(105%);
+  will-change: transform;
+}
+
+.word-span {
+  display: inline-block;
+  opacity: 0.16;
+  transition: opacity 0.4s linear;
+  will-change: opacity;
+}
+.word-span.is-active {
+  opacity: 1;
+  color: var(--ivory);
+}
+
+/* ============================================================
+   Buttons — kept in @layer components so Tailwind utilities
+   (e.g. `hidden` / `md:inline-flex`) can override `display`.
+   Unlayered rules would outrank every utility layer.
+   ============================================================ */
+@layer components {
+  .btn-premium {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    border-radius: 999px;
+    border: 1px solid rgba(201, 169, 106, 0.55);
+    color: var(--ivory);
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: color 0.4s var(--ease-out-expo),
+      border-color 0.4s var(--ease-out-expo);
+  }
+  .btn-premium span {
+    position: relative;
+    z-index: 2;
+  }
+  .btn-premium::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(100deg, #e6d2a4, #c9a96a 60%, #9c7f45);
+    transform: translateY(101%);
+    transition: transform 0.55s var(--ease-out-expo);
+  }
+  .btn-premium:hover {
+    color: var(--obsidian);
+    border-color: transparent;
+  }
+  .btn-premium:hover::before {
+    transform: translateY(0);
+  }
+  .btn-premium:active {
+    transform: scale(0.97);
+  }
+
+  .btn-solid {
+    background: linear-gradient(100deg, #e6d2a4, #c9a96a 60%, #9c7f45);
+    color: var(--obsidian);
+  }
+  .btn-solid::before {
+    background: var(--ivory);
+  }
+}
+
+/* ============================================================
+   Reduced motion — disable ALL motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .line-clip {
+    transform: none;
+  }
+  .word-span {
+    opacity: 1;
+  }
+}
